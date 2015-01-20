@@ -97,7 +97,7 @@ class Configuration implements ConfigurationInterface
                 arrayNode($os)->
                     children()->
                         booleanNode("sandbox")->defaultFalse()->end()->
-                        scalarNode("pem")->isRequired()->cannotBeEmpty()->end()->
+                        scalarNode("pem")->defaultValue("")->end()->
                         scalarNode("passphrase")->defaultValue("")->end()->
                         scalarNode('json_unescaped_unicode')->defaultFalse();
                         if (method_exists($config,'info')) {

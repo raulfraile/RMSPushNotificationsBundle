@@ -53,7 +53,7 @@ class BlackberryNotification implements OSNotificationServiceInterface
      * @throws \RMS\PushNotificationsBundle\Exception\InvalidMessageTypeException
      * @return bool
      */
-    public function send(MessageInterface $message)
+    public function send(MessageInterface $message, array $extraOptions = [])
     {
         if (!$message instanceof BlackberryMessage) {
             throw new InvalidMessageTypeException(sprintf("Message type '%s' not supported by Blackberry", get_class($message)));

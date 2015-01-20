@@ -71,7 +71,7 @@ class AppleNotification implements OSNotificationServiceInterface
      * @param $pem
      * @param $passphrase
      */
-    public function __construct($sandbox, $pem, $passphrase = "", $jsonUnescapedUnicode = FALSE)
+    public function __construct($sandbox, $pem = null, $passphrase = "", $jsonUnescapedUnicode = FALSE)
     {
         $this->useSandbox = $sandbox;
         $this->pem = $pem;
@@ -102,7 +102,7 @@ class AppleNotification implements OSNotificationServiceInterface
      * @throws \RMS\PushNotificationsBundle\Exception\InvalidMessageTypeException
      * @return bool
      */
-    public function send(MessageInterface $message)
+    public function send(MessageInterface $message, array $extraOptions = [])
     {
         if (!$message instanceof AppleMessage) {
             throw new InvalidMessageTypeException(sprintf("Message type '%s' not supported by APN", get_class($message)));
@@ -111,6 +111,15 @@ class AppleNotification implements OSNotificationServiceInterface
         $apnURL = "ssl://gateway.push.apple.com:2195";
         if ($this->useSandbox) {
             $apnURL = "ssl://gateway.sandbox.push.apple.com:2195";
+        }
+
+        if (false === empty($extraOptions)) {
+            if (array_key_exists('pem', $extraOptions)) {
+                $this->pem = $extraOptions['pem'];
+            }
+            if (array_key_exists('passphrase', $extraOptions)) {
+                $this->passphrase = $extraOptions['passphrase'];
+            }
         }
 
         $messageId = ++$this->lastMessageId;

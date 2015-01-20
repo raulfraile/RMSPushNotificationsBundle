@@ -23,7 +23,7 @@ class MicrosoftNotification implements OSNotificationServiceInterface
         $this->browser->getClient()->setVerifyPeer(false);
     }
 
-    public function send(MessageInterface $message)
+    public function send(MessageInterface $message, array $extraOptions = [])
     {
         if (!$message instanceof WindowsphoneMessage) {
             throw new InvalidMessageTypeException(sprintf("Message type '%s' not supported by MPNS", get_class($message)));

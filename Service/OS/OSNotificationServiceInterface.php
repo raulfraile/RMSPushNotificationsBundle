@@ -12,5 +12,5 @@ interface OSNotificationServiceInterface
      * @param  \RMS\PushNotificationsBundle\Message\MessageInterface $message
      * @return mixed
      */
-    public function send(MessageInterface $message);
+    public function send(MessageInterface $message, array $extraOptions = []);
 }
