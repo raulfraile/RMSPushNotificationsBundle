@@ -31,14 +31,10 @@ class iOSFeedback
      * Constructor
      *
      * @param $sandbox
-     * @param $pem
-     * @param $passphrase
      */
-    public function __construct($sandbox, $pem, $passphrase)
+    public function __construct($sandbox)
     {
         $this->sandbox = $sandbox;
-        $this->pem = $pem;
-        $this->passphrase = $passphrase;
     }
 
     /**
@@ -48,11 +44,14 @@ class iOSFeedback
      * @throws \RuntimeException
      * @return array
      */
-    public function getDeviceUUIDs()
+    public function getDeviceUUIDs($pem, $passphrase)
     {
         if (!strlen($this->pem)) {
             throw new \RuntimeException("PEM not provided");
         }
+
+        $this->pem = $pem;
+        $this->passphrase = $passphrase;
 
         $feedbackURL = "ssl://feedback.push.apple.com:2196";
         if ($this->sandbox) {
