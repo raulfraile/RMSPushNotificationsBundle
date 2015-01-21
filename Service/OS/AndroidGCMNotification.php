@@ -80,6 +80,12 @@ class AndroidGCMNotification implements OSNotificationServiceInterface
             throw new InvalidMessageTypeException("Non-GCM messages not supported by the Android GCM sender");
         }
 
+        if (false === empty($extraOptions)) {
+            if (array_key_exists('api_key', $extraOptions)) {
+                $this->apiKey = $extraOptions['api_key'];
+            }
+        }
+
         $headers = array(
             "Authorization: key=" . $this->apiKey,
             "Content-Type: application/json",

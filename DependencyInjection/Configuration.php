@@ -61,7 +61,6 @@ class Configuration implements ConfigurationInterface
                         arrayNode("gcm")->
                             canBeUnset()->
                             children()->
-                                scalarNode("api_key")->isRequired()->cannotBeEmpty()->end()->
                                 booleanNode("use_multi_curl")->defaultValue(true)->end()->
                             end()->
                         end()->
@@ -97,8 +96,6 @@ class Configuration implements ConfigurationInterface
                 arrayNode($os)->
                     children()->
                         booleanNode("sandbox")->defaultFalse()->end()->
-                        scalarNode("pem")->defaultValue("")->end()->
-                        scalarNode("passphrase")->defaultValue("")->end()->
                         scalarNode('json_unescaped_unicode')->defaultFalse();
                         if (method_exists($config,'info')) {
                             $config = $config->info('PHP >= 5.4.0 and each messaged must be UTF-8 encoding');

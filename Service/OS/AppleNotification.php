@@ -120,6 +120,9 @@ class AppleNotification implements OSNotificationServiceInterface
             if (array_key_exists('passphrase', $extraOptions)) {
                 $this->passphrase = $extraOptions['passphrase'];
             }
+            if (array_key_exists('sandbox', $extraOptions)) {
+                $this->useSandbox = (boolean) $extraOptions['sandbox'];
+            }
         }
 
         $messageId = ++$this->lastMessageId;
