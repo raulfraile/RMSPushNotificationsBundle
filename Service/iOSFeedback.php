@@ -46,7 +46,7 @@ class iOSFeedback
      */
     public function getDeviceUUIDs($pem, $passphrase)
     {
-        if (!strlen($this->pem)) {
+        if (!strlen($pem)) {
             throw new \RuntimeException("PEM not provided");
         }
 
