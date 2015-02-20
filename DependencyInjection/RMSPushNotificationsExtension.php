@@ -38,6 +38,7 @@ class RMSPushNotificationsExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $this->setInitialParams();
+        $this->setFakeServerConfig($config);
         if (isset($config["android"])) {
             $this->setAndroidConfig($config);
             $loader->load('android.xml');
@@ -65,9 +66,22 @@ class RMSPushNotificationsExtension extends Extension
      */
     protected function setInitialParams()
     {
+        $this->container->setParameter("rms_push_notifications.fake_server.enabled", false);
+        $this->container->setParameter("rms_push_notifications.fake_server.url", '');
         $this->container->setParameter("rms_push_notifications.android.enabled", false);
         $this->container->setParameter("rms_push_notifications.ios.enabled", false);
         $this->container->setParameter("rms_push_notifications.mac.enabled", false);
+    }
+
+    /**
+     * Sets Fake server config into container
+     *
+     * @param array $config
+     */
+    protected function setFakeServerConfig(array $config)
+    {
+        $this->container->setParameter("rms_push_notifications.fake_server.enabled", $config['fake_server'] !== false);
+        $this->container->setParameter("rms_push_notifications.fake_server.url", $config['fake_server']);
     }
 
     /**

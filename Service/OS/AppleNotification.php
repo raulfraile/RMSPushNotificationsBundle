@@ -65,19 +65,39 @@ class AppleNotification implements OSNotificationServiceInterface
     protected $responses = array();
 
     /**
+     * Whether the fake server is enabled or not.
+     * @var bool
+     */
+    protected $fakeServerEnabled;
+
+    /**
+     * URL of the fake server
+     * @var string
+     */
+    protected $fakeServerUrl;
+
+    protected $apnURL = "ssl://gateway.push.apple.com:2195";
+    protected $apnSandboxURL = "ssl://gateway.sandbox.push.apple.com:2195";
+
+    /**
      * Constructor
      *
      * @param $sandbox
      * @param $pem
      * @param $passphrase
      */
-    public function __construct($sandbox, $jsonUnescapedUnicode = FALSE)
+    public function __construct($sandbox, $fakeServerEnabled, $fakeServerUrl, $jsonUnescapedUnicode = FALSE)
     {
         $this->useSandbox = $sandbox;
         $this->apnStreams = array();
         $this->messages = array();
         $this->lastMessageId = -1;
         $this->jsonUnescapedUnicode = $jsonUnescapedUnicode;
+
+        if (true === $this->fakeServerEnabled) {
+            $this->apnURL = $fakeServerUrl;
+            $this->apnSandboxURL = $fakeServerUrl;
+        }
     }
 
     /**
@@ -106,9 +126,9 @@ class AppleNotification implements OSNotificationServiceInterface
             throw new InvalidMessageTypeException(sprintf("Message type '%s' not supported by APN", get_class($message)));
         }
 
-        $apnURL = "ssl://gateway.push.apple.com:2195";
+        $apnURL = $this->apnURL;
         if ($this->useSandbox) {
-            $apnURL = "ssl://gateway.sandbox.push.apple.com:2195";
+            $apnURL = $this->apnSandboxURL;
         }
 
         if (false === empty($extraOptions)) {

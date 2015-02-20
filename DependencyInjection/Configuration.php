@@ -38,6 +38,7 @@ class Configuration implements ConfigurationInterface
     {
         $this->root->
             children()->
+                scalarNode("fake_server")->defaultValue(false)->end()->
                 arrayNode("android")->
                     canBeUnset()->
                     children()->

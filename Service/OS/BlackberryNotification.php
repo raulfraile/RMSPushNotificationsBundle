@@ -33,17 +33,31 @@ class BlackberryNotification implements OSNotificationServiceInterface
     protected $password;
 
     /**
+     * Whether the fake server is enabled or not.
+     * @var bool
+     */
+    protected $fakeServerEnabled;
+
+    /**
+     * URL of the fake server
+     * @var string
+     */
+    protected $fakeServerUrl;
+
+    /**
      * Constructor
      *
      * @param $evaluation
      * @param $appID
      * @param $password
      */
-    public function __construct($evaluation, $appID, $password)
+    public function __construct($evaluation, $appID, $password, $fakeServerEnabled, $fakeServerUrl)
     {
         $this->evaluation = $evaluation;
         $this->appID = $appID;
         $this->password = $password;
+        $this->fakeServerEnabled = $fakeServerEnabled;
+        $this->fakeServerUrl = $fakeServerUrl;
     }
 
     /**
