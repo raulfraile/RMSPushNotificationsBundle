@@ -61,7 +61,7 @@ class AndroidGCMNotification implements OSNotificationServiceInterface
         $this->browser = new Browser($client);
         $this->browser->getClient()->setVerifyPeer(false);
 
-        if (true === $this->fakeServerEnabled) {
+        if (true === $fakeServerEnabled) {
             $this->apiURL = $fakeServerUrl;
         }
     }

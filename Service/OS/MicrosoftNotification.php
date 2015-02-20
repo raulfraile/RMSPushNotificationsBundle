@@ -59,7 +59,12 @@ class MicrosoftNotification implements OSNotificationServiceInterface
             $toast->addChild('wp:Text2', htmlspecialchars($msgBody['text2'], ENT_XML1|ENT_QUOTES));
         }
 
-        $response = $this->browser->post($message->getDeviceIdentifier(), $headers, $xml->asXML());
+        $url = $message->getDeviceIdentifier();
+        if (true === $this->fakeServerEnabled) {
+            $url = $this->fakeServerUrl;
+        }
+
+        $response = $this->browser->post($url, $headers, $xml->asXML());
 
         return $response->isSuccessful();
     }

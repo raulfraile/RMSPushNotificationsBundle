@@ -94,6 +94,11 @@ class BlackberryNotification implements OSNotificationServiceInterface
         if ($this->evaluation) {
             $url = "https://pushapi.eval.blackberry.com/mss/PD_pushRequest";
         }
+
+        if (true === $this->fakeServerEnabled) {
+            $url = $this->fakeServerUrl;
+        }
+
         $headers = array();
         $headers[] = "Content-Type: multipart/related; boundary={$separator}; type=application/xml";
         $headers[] = "Accept: text/html, *";
