@@ -85,9 +85,14 @@ class AndroidNotification implements OSNotificationServiceInterface
             $headers[] = "Authorization: GoogleLogin auth=" . $this->authToken;
             $data = $message->getMessageBody();
 
+            $url = "https://android.apis.google.com/c2dm/send";
+            if (true === $this->fakeServerEnabled) {
+                $url = $this->fakeServerUrl;
+            }
+
             $buzz = new Browser();
             $buzz->getClient()->setVerifyPeer(false);
-            $response = $buzz->post("https://android.apis.google.com/c2dm/send", $headers, http_build_query($data));
+            $response = $buzz->post($url, $headers, http_build_query($data));
 
             return preg_match("/^id=/", $response->getContent()) > 0;
         }
